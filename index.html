@@ -1,0 +1,1636 @@
+﻿<!doctype html>
+<html lang="id">
+  <head>
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+    <title>APK Pintar Jadwal Ceramah Ramadan 2027 M/1448 H</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: #222;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 8px;
+        font-size: 26px;
+      }
+
+      .tagline {
+        text-align: center;
+        color: red;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 8px 0 12px;
+      }
+
+      .nama {
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .nama a {
+        color: inherit;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      .nama a:hover {
+        text-decoration: underline;
+      }
+      /* =========================================
+       ADMIN HEADER
+    ========================================= */
+
+      .admin-area {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .tombol-admin {
+        background: #343a40;
+        padding: 5px 10px;
+        font-size: 11px;
+        border-radius: 5px;
+      }
+
+      .tombol-admin:hover {
+        background: #212529;
+      }
+
+      .status-admin {
+        display: none;
+        margin-top: 8px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #198754;
+      }
+
+      .tombol-keluar-admin {
+        background: #6c757d;
+        margin-left: 6px;
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+
+      .tombol-keluar-admin:hover {
+        background: #5c636a;
+      }
+
+      /* =========================================
+       TABLE
+    ========================================= */
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #bbb;
+        padding: 10px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      th {
+        background: #e9ecef;
+        font-weight: bold;
+      }
+
+      td.tempat {
+        text-align: left;
+      }
+
+      .tersedia {
+        color: #16803c;
+        font-weight: bold;
+      }
+
+      .terisi {
+        color: #c62828;
+        font-weight: bold;
+      }
+
+      .khusus {
+        background: #fff8e1;
+        font-weight: bold;
+      }
+
+      button {
+        padding: 7px 14px;
+        border: none;
+        border-radius: 6px;
+        background: #198754;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: #146c43;
+      }
+
+      .kosong {
+        color: #777;
+      }
+
+      /* =========================================
+       DETAIL
+    ========================================= */
+
+      .detail-container {
+        display: none;
+        margin-top: 25px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: #f8f9fa;
+      }
+
+      .detail-container h2 {
+        margin-top: 0;
+        font-size: 21px;
+      }
+
+      .detail-item {
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .detail-label {
+        font-weight: bold;
+      }
+
+      .tombol-detail {
+        background: #dc3545;
+        margin-top: 5px;
+      }
+
+      .tombol-detail:hover {
+        background: #bb2d3b;
+      }
+
+      /* =========================================
+       ADMIN BUTTONS
+    ========================================= */
+
+      .tombol-edit {
+        background: #fd7e14;
+        margin-top: 5px;
+      }
+
+      .tombol-edit:hover {
+        background: #e8590c;
+      }
+
+      .tombol-hapus {
+        background: #6f42c1;
+        margin-top: 5px;
+      }
+
+      .tombol-hapus:hover {
+        background: #59359a;
+      }
+
+      /* =========================================
+       FORM
+    ========================================= */
+
+      .form-container {
+        display: none;
+        margin-top: 25px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: #f8f9fa;
+      }
+
+      .form-container h2 {
+        margin-top: 0;
+        font-size: 21px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+        font-size: 15px;
+      }
+
+      .form-group textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      .info-jadwal {
+        background: white;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 18px;
+        border: 1px solid #ddd;
+        line-height: 1.8;
+      }
+
+      .tombol-simpan {
+        background: #0d6efd;
+      }
+
+      .tombol-simpan:hover {
+        background: #0b5ed7;
+      }
+
+      .tombol-batal {
+        background: #6c757d;
+        margin-left: 8px;
+      }
+
+      .tombol-batal:hover {
+        background: #5c636a;
+      }
+
+      .judul-khusus {
+        background: #e9ecef;
+        font-weight: bold;
+        text-align: left;
+        padding: 12px;
+      }
+
+      /* =========================================
+       LOGIN ADMIN
+    ========================================= */
+
+      .login-container {
+        display: none;
+        margin-top: 25px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: #f8f9fa;
+      }
+
+      .login-container h2 {
+        margin-top: 0;
+        font-size: 21px;
+      }
+
+      .login-info {
+        margin-bottom: 18px;
+        line-height: 1.6;
+        color: #555;
+      }
+
+      .tombol-login {
+        background: #212529;
+      }
+
+      .tombol-login:hover {
+        background: #000;
+      }
+
+      /* =========================================
+       MOBILE
+    ========================================= */
+
+      @media (max-width: 700px) {
+        body {
+          padding: 8px;
+        }
+
+        .container {
+          padding: 10px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        th,
+        td {
+          padding: 7px 5px;
+          font-size: 13px;
+        }
+
+        button {
+          padding: 6px 9px;
+          font-size: 12px;
+        }
+
+        .form-container,
+        .login-container,
+        .detail-container {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>APK PINTAR JADWAL RAMADAN 2027 M / 1448 H</h1>
+
+      <div class="tagline">Anti ribet. Anti bentrok. Real-time.</div>
+
+      <div class="nama">
+        FAUZANAL PUTRA SIQ., S.Pd.I.<br />
+
+        HP:
+
+        <a
+          href="https://wa.me/6281365325435"
+          target="_blank"
+          style="color: blue"
+          >+6281365325435</a
+        >
+        -
+        <a
+          href="https://wa.me/6281255030340"
+          target="_blank"
+          style="color: green"
+          >+6281255030340</a
+        >
+      </div>
+
+      <!-- =====================================
+         TOMBOL ADMIN
+    ====================================== -->
+
+      <div class="admin-area">
+        <button
+          class="tombol-admin"
+          id="tombolAdmin"
+          onclick="bukaLoginAdmin()"
+        >
+          ADMIN
+        </button>
+
+        <div class="status-admin" id="statusAdmin" style="display: none">
+          MODE ADMIN AKTIF
+
+          <button class="tombol-keluar-admin" onclick="keluarAdmin()">
+            Keluar Admin
+          </button>
+        </div>
+      </div>
+
+      <!-- =====================================
+         LOGIN ADMIN
+    ====================================== -->
+
+      <div class="login-container" id="loginContainer" style="display: none">
+        <h2>Login Admin</h2>
+
+        <div class="login-info">
+          Masukkan email dan password admin yang sudah dibuat di Firebase
+          Authentication.
+        </div>
+
+        <div class="form-group">
+          <label for="adminEmail"> Email </label>
+
+          <input
+            type="email"
+            id="adminEmail"
+            placeholder="Email admin"
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassword"> Password </label>
+
+          <input
+            type="password"
+            id="adminPassword"
+            placeholder="Password admin"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button class="tombol-login" onclick="loginAdmin()">Login</button>
+
+        <button class="tombol-batal" onclick="tutupLoginAdmin()">Batal</button>
+      </div>
+
+      <!-- =====================================
+         TABEL JADWAL
+    ====================================== -->
+
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Tanggal</th>
+            <th>Jenis</th>
+            <th>Tempat Ceramah</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="jadwalBody"></tbody>
+      </table>
+
+      <!-- =====================================
+         DETAIL JADWAL
+    ====================================== -->
+
+      <div id="detailContainer" class="detail-container">
+        <h2>Detail Jadwal</h2>
+
+        <div id="detailIsi"></div>
+      </div>
+
+      <!-- =====================================
+         FORM PENGISIAN / EDIT
+    ====================================== -->
+
+      <div class="form-container" id="formContainer">
+        <h2 id="judulForm">Isi Jadwal</h2>
+
+        <div class="info-jadwal">
+          <strong>Agenda:</strong>
+          <span id="formAgenda"></span>
+
+          <br />
+
+          <strong>Tanggal:</strong>
+          <span id="formTanggal"></span>
+
+          <br />
+
+          <strong>Jenis:</strong>
+          <span id="formJenis"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="tempat"> Tempat </label>
+
+          <input
+            type="text"
+            id="tempat"
+            placeholder="Nama masjid / mushala / surau"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="alamat"> Alamat </label>
+
+          <textarea id="alamat" placeholder="Alamat tempat"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="pengurus"> Nama Pengurus / Khatib </label>
+
+          <input
+            type="text"
+            id="pengurus"
+            placeholder="Nama pengurus atau khatib"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="nomorHp"> Nomor HP </label>
+
+          <input
+            type="tel"
+            id="nomorHp"
+            placeholder="Nomor HP yang bisa dihubungi"
+          />
+        </div>
+
+        <button
+          class="tombol-simpan"
+          id="tombolSimpan"
+          onclick="simpanJadwal()"
+        >
+          Simpan Jadwal
+        </button>
+
+        <button class="tombol-batal" onclick="batalIsi()">Batal</button>
+      </div>
+    </div>
+
+    <script>
+      /* =========================================
+                           FIREBASE CONFIGURATION
+                           Isi nilai di bawah dari Firebase Console > Project settings > Your apps.
+                        ========================================= */
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAxOGgZxahfzxYL4vUIyea-WnD00Sg1jgk",
+        authDomain: "fir-penceramah-ramadhan.firebaseapp.com",
+        projectId: "fir-penceramah-ramadhan",
+        storageBucket: "fir-penceramah-ramadhan.firebasestorage.app",
+        messagingSenderId: "836630212876",
+        appId: "1:836630212876:web:caec4c1375ec6c21749929",
+      };
+
+      const firebaseConfigured = Boolean(
+        firebaseConfig.apiKey &&
+        firebaseConfig.projectId === "fir-penceramah-ramadhan" &&
+        firebaseConfig.appId,
+      );
+
+      if (!firebaseConfigured) {
+        alert("Konfigurasi Firebase belum lengkap.");
+      }
+
+      firebase.initializeApp(firebaseConfig);
+
+      const firebaseAuth = firebase.auth();
+      const firestore = firebase.firestore();
+      const COLLECTION = "JADWAL PERDANA";
+      let adminAktif = false;
+      let modeForm = "tambah";
+      let idJadwalEdit = null;
+
+      // Adapter kecil mempertahankan alur template asli sambil memakai Firestore.
+      function createQuery(collectionName) {
+        let filters = [];
+        let maxRows = null;
+        let operation = "select";
+        let payload = null;
+        let one = false;
+
+        const q = {
+          select() {
+            operation = "select";
+            return q;
+          },
+
+          eq(field, value) {
+            filters.push([field, value]);
+            return q;
+          },
+
+          limit(n) {
+            maxRows = n;
+            return q;
+          },
+
+          single() {
+            one = true;
+            return q;
+          },
+
+          insert(value) {
+            operation = "insert";
+            payload = value;
+            return q;
+          },
+
+          update(value) {
+            operation = "update";
+            payload = value;
+            return q;
+          },
+
+          delete() {
+            operation = "delete";
+            return q;
+          },
+
+          then(resolve, reject) {
+            return execute().then(resolve, reject);
+          },
+        };
+
+        async function execute() {
+          try {
+            const ref = firestore.collection(collectionName);
+
+            if (operation === "insert") {
+              const doc = await ref.add(payload);
+              const snap = await doc.get();
+
+              return {
+                data: { id: doc.id, ...snap.data() },
+                error: null,
+              };
+            }
+
+            let query = ref;
+
+            // Terapkan filter langsung di Firestore.
+            filters.forEach(([field, value]) => {
+              query = query.where(field, "==", value);
+            });
+
+            if (maxRows !== null) {
+              query = query.limit(maxRows);
+            }
+
+            const snap = await query.get();
+            let rows = snap.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+
+            if (operation === "update") {
+              for (const row of rows) {
+                await ref.doc(row.id).update(payload);
+              }
+
+              rows = rows.map((row) => ({ ...row, ...payload }));
+            }
+
+            if (operation === "delete") {
+              for (const row of rows) {
+                await ref.doc(row.id).delete();
+              }
+
+              rows = rows.map((row) => ({ id: row.id }));
+            }
+
+            return {
+              data: one ? rows[0] || null : rows,
+              error: null,
+            };
+          } catch (error) {
+            console.error("Firestore error:", error);
+
+            return {
+              data: null,
+              error: {
+                message: error.message,
+                code: error.code,
+              },
+            };
+          }
+        }
+
+        return q;
+      }
+
+      const supabaseClient = {
+        from(name) {
+          return createQuery(name);
+        },
+
+        auth: {
+          async signOut() {
+            try {
+              await firebaseAuth.signOut();
+              return { error: null };
+            } catch (error) {
+              return { error };
+            }
+          },
+
+          async getSession() {
+            const user = firebaseAuth.currentUser;
+
+            return {
+              data: {
+                session: user ? { user } : null,
+              },
+              error: null,
+            };
+          },
+
+          async signInWithPassword({ email, password }) {
+            try {
+              const credential = await firebaseAuth.signInWithEmailAndPassword(
+                email,
+                password,
+              );
+
+              return {
+                data: { user: credential.user },
+                error: null,
+              };
+            } catch (error) {
+              return {
+                data: null,
+                error: {
+                  message: error.message,
+                  code: error.code,
+                },
+              };
+            }
+          },
+
+          onAuthStateChange(callback) {
+            firebaseAuth.onAuthStateChanged((user) => {
+              callback(
+                user ? "SIGNED_IN" : "SIGNED_OUT",
+                user ? { user } : null,
+              );
+            });
+          },
+        },
+      };
+
+      /* =========================================
+                           DATA KHUSUS
+                        ========================================= */
+
+      const dataKhusus = {
+        KHATIB_IDUL_FITRI: null,
+
+        KHATIB_IDUL_ADHA: null,
+      };
+
+      /* =========================================
+                           BULAN
+                        ========================================= */
+
+      const bulan = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+
+      /* =========================================
+                           PERIODE RAMADAN
+                        ========================================= */
+
+      const tanggalMulai = new Date(2027, 1, 7);
+
+      const tanggalAkhir = new Date(2027, 2, 8);
+
+      /* =========================================
+                           ELEMENT
+                        ========================================= */
+
+      const tbody = document.getElementById("jadwalBody");
+
+      let nomor = 1;
+
+      /* =========================================
+                           ESCAPE HTML
+                           Mencegah data dari database
+                           langsung menjadi HTML aktif.
+                        ========================================= */
+
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      /* =========================================
+                           MEMBUAT TABEL RAMADAN
+                        ========================================= */
+      let dataTerisi = {};
+      function tampilkanJadwal() {
+        tbody.innerHTML = "";
+
+        nomor = 1;
+
+        for (
+          let tanggal = new Date(tanggalMulai);
+          tanggal <= tanggalAkhir;
+          tanggal.setDate(tanggal.getDate() + 1)
+        ) {
+          const tanggalTeks =
+            tanggal.getDate() +
+            " " +
+            bulan[tanggal.getMonth()] +
+            " " +
+            tanggal.getFullYear();
+
+          const jenisList = ["SUBUH", "TARAWIH"];
+
+          jenisList.forEach((jenis, index) => {
+            const key = tanggalTeks + "|" + jenis;
+
+            const data = dataTerisi[key];
+
+            const row = document.createElement("tr");
+
+            /* NO */
+
+            if (index === 0) {
+              const tdNo = document.createElement("td");
+
+              tdNo.rowSpan = 2;
+
+              tdNo.textContent = nomor;
+
+              row.appendChild(tdNo);
+
+              /* TANGGAL */
+
+              const tdTanggal = document.createElement("td");
+
+              tdTanggal.rowSpan = 2;
+
+              tdTanggal.textContent = tanggalTeks;
+
+              row.appendChild(tdTanggal);
+            }
+
+            /* JENIS */
+
+            const tdJenis = document.createElement("td");
+
+            tdJenis.textContent = jenis;
+
+            row.appendChild(tdJenis);
+
+            /* TEMPAT */
+
+            const tdTempat = document.createElement("td");
+
+            tdTempat.className = "tempat";
+
+            if (data) {
+              tdTempat.textContent = data.tempat;
+            } else {
+              tdTempat.innerHTML = '<span class="kosong">â€”</span>';
+            }
+
+            row.appendChild(tdTempat);
+
+            /* STATUS */
+
+            const tdStatus = document.createElement("td");
+
+            if (data) {
+              let tombolAdmin = "";
+
+              if (adminAktif) {
+                tombolAdmin =
+                  "<br>" +
+                  "<button " +
+                  'class="tombol-edit" ' +
+                  'onclick="editJadwal(' +
+                  "'" +
+                  escapeHtml(tanggalTeks) +
+                  "', " +
+                  "'" +
+                  escapeHtml(jenis) +
+                  "')\">" +
+                  "Edit" +
+                  "</button>" +
+                  "<br>" +
+                  "<button " +
+                  'class="tombol-hapus" ' +
+                  'onclick="hapusJadwal(' +
+                  "'" +
+                  escapeHtml(tanggalTeks) +
+                  "', " +
+                  "'" +
+                  escapeHtml(jenis) +
+                  "')\">" +
+                  "Hapus" +
+                  "</button>";
+              }
+
+              tdStatus.innerHTML =
+                '<span class="terisi">' +
+                "TERISI" +
+                "</span>" +
+                "<br><br>" +
+                "<button " +
+                'class="tombol-detail" ' +
+                'onclick="lihatDetailJadwal(' +
+                "'" +
+                escapeHtml(tanggalTeks) +
+                "', " +
+                "'" +
+                escapeHtml(jenis) +
+                "')\">" +
+                "Lihat Detail" +
+                "</button>" +
+                tombolAdmin;
+            } else {
+              tdStatus.innerHTML =
+                '<span class="tersedia">' +
+                "TERSEDIA" +
+                "</span>" +
+                "<br><br>" +
+                '<button onclick="pilihJadwal(' +
+                "'" +
+                escapeHtml(tanggalTeks) +
+                "', " +
+                "'" +
+                escapeHtml(jenis) +
+                "')\">" +
+                "Pilih" +
+                "</button>";
+            }
+
+            row.appendChild(tdStatus);
+
+            tbody.appendChild(row);
+          });
+
+          nomor++;
+        }
+
+        /* =====================================
+                               BAGIAN KHUSUS KHATIB
+                            ===================================== */
+
+        const judulKhusus = document.createElement("tr");
+
+        judulKhusus.innerHTML =
+          '<td colspan="5" class="judul-khusus">' + "JADWAL KHATIB" + "</td>";
+
+        tbody.appendChild(judulKhusus);
+
+        buatBarisKhusus("KHATIB_IDUL_FITRI", "Khatib Idul Fitri");
+
+        buatBarisKhusus("KHATIB_IDUL_ADHA", "Khatib Idul Adha");
+      }
+
+      /* =========================================
+                           MEMBUAT BARIS KHUSUS
+                        ========================================= */
+
+      function buatBarisKhusus(kode, namaAgenda) {
+        const data = dataKhusus[kode];
+
+        const row = document.createElement("tr");
+
+        const tdNo = document.createElement("td");
+
+        tdNo.textContent = "â€”";
+
+        row.appendChild(tdNo);
+
+        const tdTanggal = document.createElement("td");
+
+        tdTanggal.textContent = "Khusus";
+
+        row.appendChild(tdTanggal);
+
+        const tdJenis = document.createElement("td");
+
+        tdJenis.textContent = namaAgenda;
+
+        row.appendChild(tdJenis);
+
+        const tdTempat = document.createElement("td");
+
+        tdTempat.className = "tempat";
+
+        if (data) {
+          tdTempat.textContent = data.tempat;
+        } else {
+          tdTempat.innerHTML = '<span class="kosong">â€”</span>';
+        }
+
+        row.appendChild(tdTempat);
+
+        const tdStatus = document.createElement("td");
+
+        if (data) {
+          tdStatus.innerHTML = '<span class="terisi">' + "TERISI" + "</span>";
+        } else {
+          tdStatus.innerHTML =
+            '<span class="tersedia">' +
+            "TERSEDIA" +
+            "</span>" +
+            "<br><br>" +
+            '<button onclick="pilihKhusus(' +
+            "'" +
+            kode +
+            "', " +
+            "'" +
+            namaAgenda +
+            "')\">" +
+            "Pilih" +
+            "</button>";
+        }
+
+        row.appendChild(tdStatus);
+
+        tbody.appendChild(row);
+      }
+
+      /* =========================================
+                           VARIABEL JADWAL YANG DIPILIH
+                        ========================================= */
+
+      let jadwalDipilihTanggal = "";
+
+      let jadwalDipilihJenis = "";
+
+      let agendaDipilih = "";
+
+      let kodeKhususDipilih = "";
+
+      /* =========================================
+                           PILIH JADWAL RAMADAN
+                        ========================================= */
+
+      function pilihJadwal(tanggal, jenis) {
+        jadwalDipilihTanggal = tanggal;
+
+        jadwalDipilihJenis = jenis;
+
+        agendaDipilih = "Jadwal Ceramah Ramadan";
+
+        kodeKhususDipilih = "";
+
+        modeForm = "tambah";
+
+        idJadwalEdit = null;
+
+        document.getElementById("judulForm").textContent = "Isi Jadwal";
+
+        document.getElementById("tombolSimpan").textContent = "Simpan Jadwal";
+        document.getElementById("tombolSimpan").onclick = simpanJadwal;
+
+        bukaForm("Jadwal Ceramah Ramadan", tanggal, jenis);
+      }
+
+      /* =========================================
+                           PILIH KHATIB KHUSUS
+                        ========================================= */
+
+      function pilihKhusus(kode, namaAgenda) {
+        kodeKhususDipilih = kode;
+
+        jadwalDipilihTanggal = "Khusus";
+
+        jadwalDipilihJenis = namaAgenda;
+
+        agendaDipilih = namaAgenda;
+
+        modeForm = "tambah";
+
+        idJadwalEdit = null;
+
+        bukaForm(namaAgenda, "Khusus", namaAgenda);
+      }
+
+      /* =========================================
+                           BUKA FORM
+                        ========================================= */
+
+      function bukaForm(agenda, tanggal, jenis) {
+        document.getElementById("formAgenda").textContent = agenda;
+
+        document.getElementById("formTanggal").textContent = tanggal;
+
+        document.getElementById("formJenis").textContent = jenis;
+
+        document.getElementById("tempat").value = "";
+
+        document.getElementById("alamat").value = "";
+
+        document.getElementById("pengurus").value = "";
+
+        document.getElementById("nomorHp").value = "";
+
+        document.getElementById("formContainer").style.display = "block";
+
+        document.getElementById("formContainer").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      /* =========================================
+                           SIMPAN / UPDATE
+                        ========================================= */
+
+      /* =========================================
+                           EDIT JADWAL
+                        ========================================= */
+
+      async function editJadwal(tanggal, jenis) {
+        if (!adminAktif) {
+          alert("Mode Admin belum aktif.");
+
+          return;
+        }
+
+        const key = tanggal + "|" + jenis;
+
+        const data = dataTerisi[key];
+
+        if (!data) {
+          alert("Data jadwal tidak ditemukan.");
+
+          return;
+        }
+
+        modeForm = "edit";
+
+        idJadwalEdit = data.id;
+
+        jadwalDipilihTanggal = tanggal;
+
+        jadwalDipilihJenis = jenis;
+
+        kodeKhususDipilih = "";
+
+        agendaDipilih = "Jadwal Ceramah Ramadan";
+
+        document.getElementById("judulForm").textContent = "Edit Jadwal";
+
+        document.getElementById("tombolSimpan").textContent =
+          "Simpan Perubahan";
+        document.getElementById("tombolSimpan").onclick = updateJadwal;
+
+        document.getElementById("formAgenda").textContent =
+          "Jadwal Ceramah Ramadan";
+
+        document.getElementById("formTanggal").textContent = tanggal;
+
+        document.getElementById("formJenis").textContent = jenis;
+
+        document.getElementById("tempat").value = data.tempat || "";
+
+        document.getElementById("alamat").value = data.alamat || "";
+
+        document.getElementById("pengurus").value = data.pengurus || "";
+
+        document.getElementById("nomorHp").value = data.nomorHp || "";
+
+        document.getElementById("formContainer").style.display = "block";
+
+        document.getElementById("formContainer").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      /* =========================================
+                           UPDATE JADWAL KE FIREBASE
+                        ========================================= */
+
+      async function updateJadwal() {
+        const user = firebaseAuth.currentUser;
+
+        if (!adminAktif || !user) {
+          alert("Silakan login sebagai admin terlebih dahulu.");
+          return;
+        }
+
+        if (!idJadwalEdit) {
+          alert("ID jadwal tidak ditemukan.");
+          return;
+        }
+
+        const tempat = document.getElementById("tempat").value.trim();
+        const alamat = document.getElementById("alamat").value.trim();
+        const pengurus = document.getElementById("pengurus").value.trim();
+        const nomorHp = document.getElementById("nomorHp").value.trim();
+
+        if (!tempat) {
+          alert("Tempat belum diisi.");
+          return;
+        }
+
+        try {
+          const docRef = firestore
+            .collection(COLLECTION)
+            .doc(String(idJadwalEdit));
+          const doc = await docRef.get();
+
+          if (!doc.exists) {
+            alert("Jadwal tidak ditemukan di Firebase.");
+            return;
+          }
+
+          await docRef.update({
+            tempat: tempat,
+            alamat: alamat,
+            "nama pengurus": pengurus,
+            "nomor hp": nomorHp,
+            diperbaruiPada: firebase.firestore.FieldValue.serverTimestamp(),
+            diperbaruiOleh: user.uid,
+          });
+
+          alert("Jadwal berhasil diperbarui.");
+
+          document.getElementById("formContainer").style.display = "none";
+          modeForm = "tambah";
+          idJadwalEdit = null;
+
+          await muatJadwalDariSupabase();
+        } catch (error) {
+          console.error("Gagal mengedit jadwal:", error);
+          alert("Gagal memperbarui jadwal Firebase:\n" + error.message);
+        }
+      }
+
+      /* =========================================
+                           HAPUS JADWAL - VERSI AMAN
+                        ========================================= */
+
+      /* =========================================
+                           HAPUS JADWAL
+                        ========================================= */
+
+      async function hapusJadwal(tanggal, jenis) {
+        const user = firebaseAuth.currentUser;
+
+        if (!adminAktif || !user) {
+          alert("Silakan login sebagai admin terlebih dahulu.");
+          return;
+        }
+
+        const key = tanggal + "|" + jenis;
+        const data = dataTerisi[key];
+
+        if (!data || !data.id) {
+          alert("ID jadwal tidak ditemukan.");
+          return;
+        }
+
+        const yakin = confirm(
+          "Hapus jadwal ini?\n\n" +
+            "Tanggal: " +
+            tanggal +
+            "\nJenis: " +
+            jenis +
+            "\nTempat: " +
+            data.tempat +
+            "\n\nData yang dihapus hanya jadwal ini.",
+        );
+
+        if (!yakin) return;
+
+        try {
+          const docRef = firestore.collection(COLLECTION).doc(String(data.id));
+          const doc = await docRef.get();
+
+          if (!doc.exists) {
+            alert("Jadwal sudah tidak ada di Firebase.");
+            await muatJadwalDariSupabase();
+            return;
+          }
+
+          await docRef.delete();
+
+          alert("Jadwal berhasil dihapus.");
+
+          document.getElementById("detailContainer").style.display = "none";
+          await muatJadwalDariSupabase();
+        } catch (error) {
+          console.error("Gagal menghapus jadwal:", error);
+          alert("Gagal menghapus jadwal Firebase:\n" + error.message);
+        }
+      }
+
+      async function simpanJadwal() {
+        const tempat = document.getElementById("tempat").value.trim();
+        const alamat = document.getElementById("alamat").value.trim();
+        const pengurus = document.getElementById("pengurus").value.trim();
+        const nomorHp = document.getElementById("nomorHp").value.trim();
+
+        if (!tempat) {
+          alert("Tempat belum diisi.");
+          return;
+        }
+
+        if (kodeKhususDipilih !== "") {
+          alert("Jadwal khusus belum disambungkan ke database.");
+          return;
+        }
+
+        const tanggalDatabase = ubahTanggalKeDatabase(jadwalDipilihTanggal);
+        const jadwalRef = firestore.collection(COLLECTION);
+
+        try {
+          // Cek jadwal ganda di Firestore.
+          const cek = await jadwalRef
+            .where("tanggal", "==", tanggalDatabase)
+            .where("jenis", "==", jadwalDipilihJenis)
+            .limit(1)
+            .get();
+
+          if (!cek.empty) {
+            alert(
+              "Jadwal ini sudah terisi.\n\nTanggal: " +
+                jadwalDipilihTanggal +
+                "\nJenis: " +
+                jadwalDipilihJenis,
+            );
+            return;
+          }
+
+          // Simpan jadwal baru.
+          await jadwalRef.add({
+            tanggal: tanggalDatabase,
+            jenis: jadwalDipilihJenis,
+            tempat: tempat,
+            alamat: alamat,
+            "nama pengurus": pengurus,
+            "nomor hp": nomorHp,
+            status: "TERISI",
+            dibuatPada: firebase.firestore.FieldValue.serverTimestamp(),
+            dibuatOleh: "publik",
+          });
+
+          alert("Jadwal berhasil disimpan ke Firebase.");
+
+          document.getElementById("formContainer").style.display = "none";
+          modeForm = "tambah";
+          idJadwalEdit = null;
+
+          await muatJadwalDariSupabase();
+        } catch (error) {
+          console.error("Gagal menyimpan jadwal:", error);
+          alert(
+            "Gagal menyimpan jadwal ke Firebase:\n" +
+              (error.message || "Periksa koneksi dan Firestore Rules."),
+          );
+        }
+      }
+
+      /* =========================================
+                           JALANKAN PERTAMA KALI
+                        ========================================= */
+
+      function ubahTanggalKeDatabase(tanggalTeks) {
+        const bagian = String(tanggalTeks).trim().split(/\s+/);
+        if (bagian.length !== 3)
+          throw new Error("Format tanggal tidak dikenal: " + tanggalTeks);
+        const hari = Number(bagian[0]),
+          tahun = Number(bagian[2]);
+        const indeksBulan = bulan.findIndex(
+          (n) => n.toLowerCase() === bagian[1].toLowerCase(),
+        );
+        if (!hari || !tahun || indeksBulan < 0)
+          throw new Error("Tanggal tidak valid: " + tanggalTeks);
+        return `${tahun}-${String(indeksBulan + 1).padStart(2, "0")}-${String(hari).padStart(2, "0")}`;
+      }
+
+      async function muatJadwalDariSupabase() {
+        try {
+          const snapshot = await firestore.collection(COLLECTION).get();
+          const dataBaru = {};
+          const khususBaru = {
+            KHATIB_IDUL_FITRI: null,
+            KHATIB_IDUL_ADHA: null,
+          };
+          snapshot.forEach((doc) => {
+            const raw = doc.data() || {};
+            const jenis = String(raw.jenis ?? raw.Jenis ?? "")
+              .trim()
+              .toUpperCase();
+            const tanggalRaw = raw.tanggal ?? raw.Tanggal ?? "";
+            const tanggalISO =
+              typeof tanggalRaw === "string" ? tanggalRaw.slice(0, 10) : "";
+            const data = {
+              id: doc.id,
+              tanggal: tanggalISO,
+              jenis,
+              tempat: raw.tempat ?? raw.Tempat ?? "",
+              alamat: raw.alamat ?? raw.Alamat ?? "",
+              pengurus:
+                raw["nama pengurus"] ?? raw.pengurus ?? raw.nama_pengurus ?? "",
+              nomorHp: raw["nomor hp"] ?? raw.nomorHp ?? raw.nomor_hp ?? "",
+              status: raw.status ?? "TERISI",
+            };
+            if (jenis === "KHATIB_IDUL_FITRI" || jenis === "KHATIB_IDUL_ADHA") {
+              khususBaru[jenis] = data;
+              return;
+            }
+            const m = tanggalISO.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+            if (!m) {
+              console.warn(
+                "Format tanggal Firestore tidak dikenal:",
+                doc.id,
+                tanggalRaw,
+              );
+              return;
+            }
+            const tahun = Number(m[1]),
+              nomorBulan = Number(m[2]),
+              hari = Number(m[3]);
+            if (nomorBulan < 1 || nomorBulan > 12 || hari < 1 || hari > 31)
+              return;
+            const tanggalTeks = `${hari} ${bulan[nomorBulan - 1]} ${tahun}`;
+            if (jenis === "SUBUH" || jenis === "TARAWIH")
+              dataBaru[`${tanggalTeks}|${jenis}`] = data;
+          });
+          dataTerisi = dataBaru;
+          Object.assign(dataKhusus, khususBaru);
+          tampilkanJadwal();
+          console.log(
+            "Jadwal Firestore dimuat:",
+            Object.keys(dataTerisi).length,
+          );
+        } catch (error) {
+          console.error("Gagal memuat jadwal Firestore:", error);
+          alert("Gagal memuat jadwal Firebase: " + error.message);
+        }
+      }
+
+      function tutupLoginAdmin() {
+        const el = document.getElementById("loginContainer");
+        if (el) el.style.display = "none";
+      }
+
+      function keluarAdmin() {
+        firebaseAuth.signOut().catch((error) => {
+          console.error("Gagal keluar admin:", error);
+          alert("Gagal keluar admin: " + error.message);
+        });
+      }
+
+      function lihatDetailJadwal(tanggal, jenis) {
+        const data = dataTerisi[`${tanggal}|${jenis}`];
+        if (!data) {
+          alert("Detail jadwal tidak ditemukan.");
+          return;
+        }
+        document.getElementById("detailIsi").innerHTML =
+          '<div class="detail-item"><span class="detail-label">Tanggal:</span> ' +
+          escapeHtml(tanggal) +
+          "</div>" +
+          '<div class="detail-item"><span class="detail-label">Jenis:</span> ' +
+          escapeHtml(jenis) +
+          "</div>" +
+          '<div class="detail-item"><span class="detail-label">Tempat:</span> ' +
+          escapeHtml(data.tempat) +
+          "</div>" +
+          '<div class="detail-item"><span class="detail-label">Alamat:</span> ' +
+          escapeHtml(data.alamat) +
+          "</div>" +
+          '<div class="detail-item"><span class="detail-label">Pengurus/Khatib:</span> ' +
+          escapeHtml(data.pengurus) +
+          "</div>" +
+          '<div class="detail-item"><span class="detail-label">Nomor HP:</span> ' +
+          escapeHtml(data.nomorHp) +
+          "</div>";
+        const box = document.getElementById("detailContainer");
+        box.style.display = "block";
+        box.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function batalIsi() {
+        document.getElementById("formContainer").style.display = "none";
+        modeForm = "tambah";
+        idJadwalEdit = null;
+        kodeKhususDipilih = "";
+      }
+
+      let pemeriksaanSesiAwalSelesai = false;
+
+      let loginAdminManual = false;
+      firebaseAuth.onAuthStateChanged(async (user) => {
+        if (!pemeriksaanSesiAwalSelesai) {
+          pemeriksaanSesiAwalSelesai = true;
+
+          if (user) {
+            try {
+              await firebaseAuth.signOut();
+            } catch (error) {
+              console.error("Gagal mengakhiri sesi awal:", error);
+            }
+            user = null;
+          }
+        }
+
+        adminAktif = Boolean(
+          loginAdminManual &&
+          user &&
+          (user.email || "").toLowerCase() === "fauzanal.putra@gmail.com",
+        );
+
+        window.adminAktif = adminAktif;
+
+        const status = document.getElementById("statusAdmin");
+        const tombol = document.getElementById("tombolAdmin");
+
+        if (status) status.style.display = adminAktif ? "block" : "none";
+        if (tombol) tombol.style.display = adminAktif ? "none" : "inline-block";
+
+        if (adminAktif) {
+          tutupLoginAdmin();
+        }
+
+        await muatJadwalDariSupabase();
+      });
+
+      tampilkanJadwal();
+
+      function bukaLoginAdmin() {
+        document.getElementById("loginContainer").style.display = "block";
+        document.getElementById("loginContainer").scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+
+      async function loginAdmin() {
+        const email = document.getElementById("adminEmail").value.trim();
+        const password = document.getElementById("adminPassword").value;
+
+        if (!email || !password) {
+          alert("Masukkan email dan password admin.");
+          return;
+        }
+
+        try {
+          const hasil = await firebaseAuth.signInWithEmailAndPassword(
+            email,
+            password,
+          );
+
+          // Validasi akun admin resmi
+          if (
+            !hasil.user ||
+            (hasil.user.email || "").toLowerCase() !==
+              "fauzanal.putra@gmail.com"
+          ) {
+            adminAktif = false;
+            window.adminAktif = false;
+            await firebaseAuth.signOut();
+            alert("Akun ini tidak memiliki hak admin.");
+            return;
+          }
+
+          loginAdminManual = true;
+          adminAktif = true;
+          window.adminAktif = true;
+          const status = document.getElementById("statusAdmin");
+          const tombol = document.getElementById("tombolAdmin");
+          if (status) status.style.display = "block";
+          if (tombol) tombol.style.display = "none";
+
+          tampilkanJadwal();
+
+          // Tutup formulir login jika fungsi tersedia
+          if (typeof tutupLoginAdmin === "function") {
+            tutupLoginAdmin();
+          }
+
+          await muatJadwalDariSupabase();
+
+          console.log("Login admin berhasil:", hasil.user.email);
+          alert("Login admin berhasil. Status admin aktif.");
+        } catch (error) {
+          console.error("Login admin gagal:", error);
+          alert("Login gagal: " + error.message);
+        }
+      }
+    </script>
+
+    <div class="footer">
+      Dibuat oleh Hui Techno &amp; Team â€” Butuh solusi digital berupa web,
+      aplikasi dan lain-lain? Hubungi Admin:
+      <a href="https://wa.me/6285831434588" target="_blank" style="color: blue">
+        +6285831434588
+      </a>
+    </div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./service-worker.js")
+            .then(() => console.log("PWA service worker aktif"))
+            .catch((error) =>
+              console.error("PWA service worker gagal:", error),
+            );
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function admin() {
+      return request.auth != null
+        && request.auth.token.email == "fauzanal.putra@gmail.com";
+    }
+
+    match /{collection}/{jadwalId} {
+      allow read: if collection == "JADWAL PERDANA";
+
+      allow create: if collection == "JADWAL PERDANA"
+        && request.resource.data.keys().hasAll([
+          'tanggal', 'jenis', 'tempat', 'alamat',
+          'nama pengurus', 'nomor hp', 'status',
+          'dibuatPada', 'dibuatOleh'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'tanggal', 'jenis', 'tempat', 'alamat',
+          'nama pengurus', 'nomor hp', 'status',
+          'dibuatPada', 'dibuatOleh'
+        ])
+        && request.resource.data.tanggal is string
+        && request.resource.data.jenis is string
+        && request.resource.data.tempat is string
+        && request.resource.data.tempat.size() > 0
+        && request.resource.data.tempat.size() <= 200
+        && request.resource.data.alamat is string
+        && request.resource.data.alamat.size() <= 1000
+        && request.resource.data['nama pengurus'] is string
+        && request.resource.data['nama pengurus'].size() <= 200
+        && request.resource.data['nomor hp'] is string
+        && request.resource.data['nomor hp'].size() <= 30
+        && request.resource.data.status == 'TERISI'
+        && request.resource.data.dibuatPada == request.time
+        && request.resource.data.dibuatOleh == 'publik';
+
+      allow update, delete: if collection == "JADWAL PERDANA"
+        && admin();
+    }
+  }
+}

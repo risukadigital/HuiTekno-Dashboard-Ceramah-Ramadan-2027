@@ -1,0 +1,8 @@
+.firebase/
+PWA_Firebase_Paket/
+PWA_Firebase_Paket.zip
+*.bak
+*.bak-*
+*.backup
+
+*.backup*
