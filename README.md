@@ -1,22 +1,88 @@
-# HuiTekno — Dashboard Ceramah Firebase
+# HuiTekno — Dashboard Ceramah Ramadan 2027
 
-Proyek salinan berbasis template HTML yang diberikan, dipisahkan dari proyek nomor 1 (Supabase).
+Aplikasi pengelolaan jadwal ceramah Ramadan berbasis HTML, JavaScript, Firebase Hosting, dan Cloud Firestore.
 
-## Yang perlu dilakukan
-1. Buat project Firebase baru untuk proyek nomor 14.
-2. Aktifkan **Authentication → Email/Password** dan buat akun admin.
-3. Buat **Cloud Firestore database**.
-4. Buka `index.html`, lalu isi `firebaseConfig` dengan konfigurasi aplikasi web dari Firebase Console. Jangan memasukkan private key/service-account key ke frontend.
-5. Deploy ke Hosting setelah uji coba. Instal Firebase CLI (`npm install -g firebase-tools`), login (`firebase login`), lalu dari folder ini jalankan `firebase deploy`.
+## 🌐 Tautan Proyek
 
-## Struktur
-- `index.html` — UI template dan adapter Firebase Auth/Firestore.
-- `firebase.json` — konfigurasi Hosting dan Firestore rules.
-- `firestore.rules` — aturan awal: baca jadwal publik, tulis hanya setelah login.
-- `manifest.json`, `service-worker.js` — dukungan PWA dasar.
+- **Website aktif:** https://fir-penceramah-ramadhan.web.app
+- **Repositori GitHub:** https://github.com/risukadigital/HuiTekno-Dashboard-Ceramah-Ramadan-2027
 
-## Penting sebelum produksi
-- Aturan Firestore ini mengizinkan semua akun terautentikasi menulis. Untuk produksi, ubah menjadi custom claims admin atau aturan role khusus sebelum deploy publik.
-- Template memiliki agenda Khatib Idul Fitri/Idul Adha yang belum disimpan ke database oleh kode sumber; bagian itu belum ditambahkan pada migrasi ini.
-- Realtime menggunakan `onSnapshot` Firestore. Lakukan pengujian login, baca, tambah, edit, hapus, dan akses lintas perangkat setelah konfigurasi Firebase diisi.
-- Tidak ada konfigurasi Firebase nyata yang disertakan; aplikasi belum terhubung atau dipublikasikan.
+## Status Proyek
+
+- Website telah berhasil di-deploy ke Firebase Hosting.
+- Formulir penyimpanan jadwal publik telah diuji melalui HP dan berhasil menyimpan jadwal.
+- Kode sumber telah disimpan di GitHub pada cabang `main`.
+- Pengujian fitur lain tetap perlu dilakukan secara bertahap.
+
+## Struktur File
+
+| File atau folder | Fungsi |
+|---|---|
+| `index.html` | Antarmuka dan logika utama aplikasi |
+| `firebase.json` | Konfigurasi Firebase Hosting dan Firestore Rules |
+| `firestore.rules` | Aturan akses Cloud Firestore |
+| `.firebaserc` | Referensi proyek Firebase |
+| `manifest.json` | Metadata aplikasi PWA |
+| `service-worker.js` | Dukungan cache dan PWA |
+| `icons/` | Ikon aplikasi |
+| `PWA1.png` | Gambar pendukung aplikasi |
+| `FIREBASE_PENCERAMAH_RAMADHAN_27.html` | File HTML tambahan proyek |
+
+## Teknologi
+
+- HTML, CSS, dan JavaScript
+- Firebase Hosting
+- Cloud Firestore
+- Firebase Authentication
+- Progressive Web App (PWA)
+
+## Alur Pengembangan
+
+Pastikan Firebase CLI sudah terpasang dan akun yang digunakan memiliki akses ke proyek.
+
+Login Firebase:
+
+```powershell
+firebase login
+```
+
+Periksa perubahan lokal:
+
+```powershell
+git status
+```
+
+Simpan perubahan ke Git:
+
+```powershell
+git add .
+git commit -m "Deskripsi perubahan"
+git push origin main
+```
+
+Deploy perubahan aplikasi ke Firebase Hosting:
+
+```powershell
+firebase deploy --only hosting --project fir-penceramah-ramadhan
+```
+
+Perintah Git menyimpan dan mengirim kode ke GitHub. Perintah deploy memperbarui aplikasi di Firebase Hosting. Keduanya merupakan proses yang berbeda.
+
+## Keamanan
+
+- Jangan memasukkan kata sandi, token akses, private key, atau service-account key ke repositori publik.
+- Aturan Firestore harus membatasi operasi baca, tambah, edit, dan hapus sesuai kebutuhan aplikasi.
+- Periksa aturan akses publik dan admin sebelum menambahkan fitur baru.
+- Hindari memasukkan nomor HP atau data pribadi nyata ke dokumentasi publik.
+
+## Pengujian Berikutnya
+
+- Memastikan jadwal yang disimpan dari HP tampil di laptop.
+- Menguji login admin.
+- Menguji tambah, edit, dan hapus jadwal sesuai hak akses.
+- Memastikan pembaruan data konsisten di berbagai perangkat.
+- Memeriksa perilaku cache dan pembaruan PWA.
+
+## Riwayat Versi
+
+- `e729184` — Versi awal HuiTekno Dashboard Ceramah Ramadan 2027.
